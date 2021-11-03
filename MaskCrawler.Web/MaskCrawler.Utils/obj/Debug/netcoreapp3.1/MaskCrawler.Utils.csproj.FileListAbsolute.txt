@@ -1,0 +1,10 @@
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\bin\Debug\netcoreapp3.1\MaskCrawler.Utils.deps.json
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\bin\Debug\netcoreapp3.1\MaskCrawler.Utils.dll
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\bin\Debug\netcoreapp3.1\MaskCrawler.Utils.pdb
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\obj\Debug\netcoreapp3.1\MaskCrawler.Utils.csproj.AssemblyReference.cache
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\obj\Debug\netcoreapp3.1\MaskCrawler.Utils.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\obj\Debug\netcoreapp3.1\MaskCrawler.Utils.AssemblyInfoInputs.cache
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\obj\Debug\netcoreapp3.1\MaskCrawler.Utils.AssemblyInfo.cs
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\obj\Debug\netcoreapp3.1\MaskCrawler.Utils.csproj.CoreCompileInputs.cache
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\obj\Debug\netcoreapp3.1\MaskCrawler.Utils.dll
+C:\Users\FIRE\source\repos\MaskCrawler.Web\Utils\obj\Debug\netcoreapp3.1\MaskCrawler.Utils.pdb

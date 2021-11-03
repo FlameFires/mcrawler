@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "9Gy3no1xrdjRPg2JT/uindY4c7U2A3o0kYRzX8SWnl0P3XQNlgfdHR8xZTy7MI1Q4ADjoq/igyTwrrBMmaPWHA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\FIRE\\source\\repos\\MaskCrawler.Web\\Utils\\MaskCrawler.Utils.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\FIRE\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\FIRE\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
+    "C:\\Users\\FIRE\\.nuget\\packages\\microsoft.extensions.primitives\\2.2.0\\microsoft.extensions.primitives.2.2.0.nupkg.sha512",
+    "C:\\Users\\FIRE\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\FIRE\\.nuget\\packages\\system.memory\\4.5.1\\system.memory.4.5.1.nupkg.sha512",
+    "C:\\Users\\FIRE\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.1\\system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512",
+    "C:\\Users\\FIRE\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

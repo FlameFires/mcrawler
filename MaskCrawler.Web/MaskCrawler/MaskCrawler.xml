@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MaskCrawler.Web</name>
+    </assembly>
+    <members>
+        <member name="T:MaskCrawler.Web.Authorization.UserAuthorizationHandler">
+            <summary>
+            使用的用户认证方法
+            </summary>
+        </member>
+        <member name="T:MaskCrawler.Web.Authorization.UserRequirement">
+            <summary>
+            用户认证需求
+            </summary>
+        </member>
+        <member name="M:MaskCrawler.Web.Extensions.StartupOverallExtension.AddOverallServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            添加应用服务
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:MaskCrawler.Web.Extensions.StartupOverallExtension.UseOverallConfigure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            启用应用配置
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:MaskCrawler.Web.Extensions.StartupOverallExtension.AddRepositories(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            添加数据仓库
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:MaskCrawler.Web.Extensions.StartupOverallExtension.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加数据服务
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:MaskCrawler.Controllers.AccountController">
+            <summary>
+            账号信息接口
+            </summary>
+        </member>
+        <member name="M:MaskCrawler.Controllers.AccountController.Login(MaskCrawler.Models.Dto.AccountLoginDto)">
+            <summary>
+            登录
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MaskCrawler.Controllers.AccountController.Register(MaskCrawler.Models.Dto.AccountRegisterDto)">
+            <summary>
+            注册
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MaskCrawler.Controllers.AccountController.Aquire">
+            <summary>
+            获取用户信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MaskCrawler.Controllers.AccountController.CheckAuthorize">
+            <summary>
+            校验token并返回
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MaskCrawler.Controllers.Main.TaskController.Add(MaskCrawler.Models.Dto.TaskInfoDto)">
+            <summary>
+            添加任务
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MaskCrawler.Controllers.Main.TaskController.Start(System.Guid)">
+            <summary>
+            启动任务
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MaskCrawler.Controllers.Main.TaskController.Pause(System.Guid)">
+            <summary>
+            暂停任务
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MaskCrawler.Controllers.Main.TaskController.Delete(System.Guid)">
+            <summary>
+            删除任务
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MaskCrawler.Controllers.Main.TaskController.Query(MaskCrawler.Models.Dto.TaskQueryDto)">
+            <summary>
+            查询任务
+            </summary>
+            <param name="queryDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MaskCrawler.Controllers.Main.TaskController.Aquire(System.Guid)">
+            <summary>
+            获取任务
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

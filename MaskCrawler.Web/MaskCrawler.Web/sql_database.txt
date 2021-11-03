@@ -1,0 +1,29 @@
+﻿1.MSSQLSERVER
+
+"ConnectionStrings": {
+
+　　"DefaultConnection": "Server=127.0.0.1;Database=HXCDataPermission_test;user id=sa;password=sasa;MultipleActiveResultSets=true"
+
+}
+
+2.Oracle
+
+"ConnectionStrings": {
+
+　　"DefaultConnection": "User Id=system;Password=orcl;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=127.0.0.1)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=orcl)))"
+
+}
+
+3.MySql
+
+"ConnectionStrings": {
+　　"DefaultConnection": "server=127.0.0.1;database=mydatabase;user=root;pwd=root"
+}
+
+4.Redis
+
+"ConnectionStrings": {
+
+　　"RedisConnection": "127.0.0.1:6379,password=redis"
+
+}

@@ -1,0 +1,15 @@
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\bin\Debug\netcoreapp3.1\MaskCrawler.Http.deps.json
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\bin\Debug\netcoreapp3.1\MaskCrawler.Http.dll
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\bin\Debug\netcoreapp3.1\MaskCrawler.Http.pdb
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\bin\Debug\netcoreapp3.1\MaskCrawler.Models.dll
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\bin\Debug\netcoreapp3.1\MaskCrawler.Utils.dll
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\bin\Debug\netcoreapp3.1\MaskCrawler.Models.pdb
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\bin\Debug\netcoreapp3.1\MaskCrawler.Utils.pdb
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\obj\Debug\netcoreapp3.1\MaskCrawler.Http.csproj.AssemblyReference.cache
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\obj\Debug\netcoreapp3.1\MaskCrawler.Http.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\obj\Debug\netcoreapp3.1\MaskCrawler.Http.AssemblyInfoInputs.cache
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\obj\Debug\netcoreapp3.1\MaskCrawler.Http.AssemblyInfo.cs
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\obj\Debug\netcoreapp3.1\MaskCrawler.Http.csproj.CoreCompileInputs.cache
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\obj\Debug\netcoreapp3.1\MaskCrawler.Http.csproj.CopyComplete
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\obj\Debug\netcoreapp3.1\MaskCrawler.Http.dll
+C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler.Http\obj\Debug\netcoreapp3.1\MaskCrawler.Http.pdb
