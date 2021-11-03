@@ -1,9 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\FIRE\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\FIRE\\.nuget\\packages",
-      "H:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-    ]
-  }
-}
