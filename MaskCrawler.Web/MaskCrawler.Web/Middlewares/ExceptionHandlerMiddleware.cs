@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 using System;
 using System.Threading.Tasks;
@@ -7,12 +8,11 @@ namespace MaskCrawler.Middlewares
 {
     public class ExceptionHandlerMiddleware : IMiddleware
     {
-        //private readonly RequestDelegate _next;
-
-        //public ExceptionHandlerMiddleware(RequestDelegate next)
-        //{
-        //    _next = next;
-        //}
+        private readonly ILogger _logger;
+        public ExceptionHandlerMiddleware(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         private Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
         {

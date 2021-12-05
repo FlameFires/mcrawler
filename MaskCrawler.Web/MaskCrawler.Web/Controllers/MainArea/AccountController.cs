@@ -41,12 +41,14 @@ namespace MaskCrawler.Controllers
             var aciton = new Func<AccountEntity, string>(entity =>
             {
                 var gid = entity.Gid;
+                // 生成token
                 var token = jWTService.GetToken(new SessionEntity
                 {
                     Gid = entity.Gid.ToString(),
                     Name = entity.Name,
                     Role = 1
                 });
+                // 添加到头部
                 base.HttpContext.Response.Headers.Add("token", token);
                 return token;
             });
@@ -76,6 +78,7 @@ namespace MaskCrawler.Controllers
             if (jwtToken == Microsoft.Extensions.Primitives.StringValues.Empty || jwtToken.Count < 1)
                 return BackResult.Failed("没获取到用户信息");
 
+            // 从token里获取用户id
             List<System.Security.Claims.Claim> claims = jWTService.GetClaims(base.HttpContext).ToList();
             var gid = jWTService.GetClaimValue(base.HttpContext, nameof(SessionEntity.Gid))?.Value;
 

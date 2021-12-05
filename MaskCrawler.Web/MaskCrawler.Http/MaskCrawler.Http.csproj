@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MaskCrawler.Models\MaskCrawler.Models.csproj" />
+    <ProjectReference Include="..\MaskCrawler.Utils\MaskCrawler.Utils.csproj" />
   </ItemGroup>
 
 </Project>

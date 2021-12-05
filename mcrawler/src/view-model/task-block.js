@@ -2,11 +2,6 @@ import { defineComponent, computed, ref, toRefs, reactive, toRef, inject } from 
 
 
 const props = {
-    img: {
-        type: String,
-        required: true,
-        default: '../../static/imgs/1.jpg'
-    },
     taskInfo: {
         type: Object,
         default: {
@@ -23,10 +18,6 @@ const props = {
         }
     }
 }
-
-const data = reactive({
-    img: props.img || "../../static/imgs/2.jpg"
-})
 
 const getCurrentDate = computed((format = 2) => {
     var now = new Date();
@@ -56,7 +47,6 @@ const getCurrentDate = computed((format = 2) => {
 })
 
 export default {
-    data,
     props,
     mths: { getCurrentDate }
 }

@@ -1,16 +1,34 @@
+/**
+ * @description: 添加组件
+ * @param {*}
+ * @return {*}
+ */
 export const useComponents = (array) => {
     let temp = {}
-    array.forEach(name => import(`../components/${name}.vue`).then(module => { console.log(typeof (module), module, module.default) temp[name] = module.default }))
+    array.forEach(name => import(`../components/${name}.vue`).then(module => {
+        console.log(typeof (module), module, module.default)
+        temp[name] = module.default
+    }))
     // array.forEach(name => temp[toKebabCase(name)] = () => import(`../components/${name}.vue`))
     return temp
 }
 
+/**驼峰命名
+ * @description: 
+ * @param {*}
+ * @return {*}
+ */
 export const toKebabCase = str =>
     str && str
         .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
         .map(x => x.toLowerCase())
         .join('-')
 
+/**
+ * @description: 获取当前日期
+ * @param {*}
+ * @return {*}
+ */
 export const getCurrentDate = (format = 2) => {
     var now = new Date()
     var year = now.getFullYear() //得到年份
@@ -37,3 +55,23 @@ export const getCurrentDate = (format = 2) => {
     }
     return time
 }
+
+/**
+ * @description: 获取任务信息
+ * @param {*}
+ * @return {*}
+ */
+export const getTaskList = function () {
+    let list = window.localStorage.getItem("tasks");
+    return list;
+}
+
+/**
+ * @description: 保存任务信息
+ * @param {*} data
+ * @return {*}
+ */
+export const setTaskList = function (data) {
+    window.localStorage.setItem("tasks", data);
+}
+

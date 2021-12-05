@@ -1,4 +1,6 @@
-﻿using MaskCrawler.Models.Dto;
+﻿using MaskCrawler.Http;
+using MaskCrawler.Models.Domain;
+using MaskCrawler.Models.Dto;
 using MaskCrawler.Persistent.Services;
 
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MaskCrawler.Controllers.Main
 {
-
+    [Authorize]
     public class TaskController : MainController
     {
         private readonly ITaskService taskService;
@@ -46,7 +48,6 @@ namespace MaskCrawler.Controllers.Main
             return await taskService.Add(dto);
         }
 
-
         /// <summary>
         /// 启动任务
         /// </summary>
@@ -56,12 +57,34 @@ namespace MaskCrawler.Controllers.Main
         public async Task<IActionResult> Start(Guid id) => await taskService.Start(id);
 
         /// <summary>
-        /// 暂停任务
+        /// 解析请求
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="entity"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> Pause(Guid id) => await taskService.Pause(id);
+        [HttpPost]
+        public async Task<IActionResult> Resolve(TaskEntity entity)
+        {
+            var result = await taskService.Resolve(entity, base.Request.HttpContext, async entity =>
+            {
+                var hinfo = new HttpInfo
+                {
+                    Url = entity.Url,
+                    Header = entity.Header,
+                    Method = new System.Net.Http.HttpMethod(entity.Method.ToString())
+                };
+
+                var rinfo = new ResolverInfo
+                {
+                    Pattern = entity.ResolvePattern,
+                    Type = (ResolverTypeEnum)Enum.Parse(typeof(ResolverTypeEnum), entity.ResolveType),
+                };
+
+                HttpDecorator decorator = new HttpDecorator(hinfo);
+                var (html, list) = await decorator.ReqAndResolve(rinfo, hinfo);
+                return BackResult.Successed(data: new { html = html, result = list });
+            });
+            return result;
+        }
 
         /// <summary>
         /// 删除任务
@@ -79,10 +102,13 @@ namespace MaskCrawler.Controllers.Main
         [HttpGet]
         public async Task<IActionResult> Query([FromQuery] TaskQueryDto queryDto) => await taskService.Query(queryDto);
 
-
+        /// <summary>
+        /// 修改任务
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] TaskInfoDto taskDto) => await taskService.Update(taskDto);
-
+        public async Task<IActionResult> Update([FromBody] TaskEntity entity) => await taskService.Update(entity);
 
         /// <summary>
         /// 获取任务

@@ -45,7 +45,7 @@ instance.interceptors.request.use((config) => {
     showLoading()
     // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
     const token = window.localStorage.getItem('token');
-    token && (config.headers.Authorization = `Bearer ${token}`)
+    token && (config.headers.Authorization = `Bearer ${token}`);
     //若请求方式为post，则将data参数转为JSON字符串
     if (config.method === 'POST') {
         config.data = JSON.stringify(config.data);
@@ -83,7 +83,9 @@ instance.interceptors.response.use((response) => {
                 message = '请求错误';
                 break;
             case 401:
-                message = '请求错误，未授权登录';
+                // message = '请求错误，未授权登录';
+                message = '请先登录'
+                // 移除过期token
                 window.localStorage.removeItem('token');
                 break;
             case 404:

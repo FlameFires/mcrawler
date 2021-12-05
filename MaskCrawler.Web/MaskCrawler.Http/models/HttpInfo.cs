@@ -1,16 +1,18 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Specialized;
 using System.Net.Http;
+using System.Text;
 
-namespace MaskCrawler.Models.Http
+namespace MaskCrawler.Http
 {
     public class HttpInfo : IHttpInfo
     {
         public HttpInfo()
         {
-            this.KeepAlive = false;
-            this.AllowRedirect = true;
-            this.Method = new HttpMethod("get");
+            KeepAlive = false;
+            AllowRedirect = true;
+            Method = new HttpMethod("get");
         }
 
         public HttpInfo(string url, Uri uri, HttpMethod method, string cookie, string header, NameValueCollection headerKV, bool keepAlive, bool allowRedirect) : this()
@@ -33,5 +35,6 @@ namespace MaskCrawler.Models.Http
         public NameValueCollection HeaderKV { get; set; }
         public bool KeepAlive { get; set; }
         public bool AllowRedirect { get; set; }
+        public Encoding ContentEncoding { get; set; }
     }
 }

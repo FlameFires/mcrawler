@@ -14,8 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Utils\MaskCrawler.Utils.csproj" />
+    <ProjectReference Include="..\MaskCrawler.Utils\MaskCrawler.Utils.csproj" />
   </ItemGroup>
+
 
   <ItemGroup>
     <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">

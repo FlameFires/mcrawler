@@ -16,12 +16,10 @@ namespace MaskCrawler.Persistent.Services.Implements
     public class AccountService : BaseService<AccountEntity>, IAccountService
     {
         private readonly IAccountRepository accountRepository;
-        private readonly IJwtService jwtService;
 
-        public AccountService(IAccountRepository accountRepository, IJwtService jwtService) : base(accountRepository)
+        public AccountService(IAccountRepository accountRepository) : base(accountRepository)
         {
             this.accountRepository = accountRepository;
-            this.jwtService = jwtService;
         }
 
         public async Task<IActionResult> Login(AccountLoginDto dto, Func<AccountEntity, string> jwtInjectionAction = null)
@@ -39,7 +37,6 @@ namespace MaskCrawler.Persistent.Services.Implements
             if (entities == null || entities.Count == 0) return BackResult.Failed("用户不存在");
 
             var jwtToken = jwtInjectionAction?.Invoke(entities[0]);
-            // TODO set jwttoken on header
 
             return BackResult.Judge(entities != null, "登录成功", data: jwtToken);
         }
@@ -72,22 +69,24 @@ namespace MaskCrawler.Persistent.Services.Implements
                 return BackResult.Successed("密码不一致");
             }
 
+            // 检查账号是否存在
             var entities = (await accountRepository.GetList(x => x.Email == dto.Name || x.Phone == dto.Name))?.ToList();
             if (entities != null && entities.Count > 0) return BackResult.Successed("账户已存在");
 
+            // 获取随机盐值
             var salt = StringUtil.RandomGetStr(6);
             var tempPwd = dto.Pwd + salt;
 
             AccountEntity entity = new AccountEntity
             {
                 Name = dto.Name,
+                // 加密密码
                 Pwd = tempPwd.Md5Encrypt(),
                 Salt = salt,
             };
 
+            // 注册
             var num = await accountRepository.Insert(entity);
-
-            // TODO 转换数据
 
             return BackResult.Judge(num, "注册成功");
         }

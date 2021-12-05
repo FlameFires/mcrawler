@@ -50,6 +50,7 @@ namespace MaskCrawler.Web.Extensions
                 option.IncludeXmlComments("MaskCrawler.xml", true);
             });
 
+            // 添加参数验证
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddFluentValidation(fu =>
@@ -58,6 +59,11 @@ namespace MaskCrawler.Web.Extensions
                     fu.RegisterValidatorsFromAssemblyContaining<AccountLoginDtoValidator>();
                     fu.RegisterValidatorsFromAssemblyContaining<AccountRegisterDtoValidator>();
                     fu.RegisterValidatorsFromAssemblyContaining<TaskInfoDtoValidator>();
+                    fu.ValidatorOptions.MessageFormatterFactory = () =>
+                    {
+
+                        return new FluentValidation.Internal.MessageFormatter();
+                    };
                 });
             return services;
         }

@@ -19,7 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MaskCrawler.Http\MaskCrawler.Http.csproj" />
     <ProjectReference Include="..\MaskCrawler.Models\MaskCrawler.Models.csproj" />
-    <ProjectReference Include="..\Utils\MaskCrawler.Utils.csproj" />
+    <ProjectReference Include="..\MaskCrawler.Utils\MaskCrawler.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

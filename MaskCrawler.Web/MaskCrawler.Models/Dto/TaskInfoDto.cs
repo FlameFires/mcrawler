@@ -6,11 +6,25 @@ namespace MaskCrawler.Models.Dto
 {
     public class TaskInfoDto
     {
+        /// <summary>
+        /// 任务名称
+        /// </summary>
         public string TaskName { get; set; }
+
+        /// <summary>
+        /// 创建人id
+        /// </summary>
+        public Guid AccountGid { get; set; }
+
+        /// <summary>
+        /// 任务描述
+        /// </summary>
         public string Desc { get; set; }
 
+        /// <summary>
+        /// 任务id
+        /// </summary>
         public Guid TaskId { get; set; }
-        public Guid AccountGid { get; set; }
 
         /// <summary>
         /// 请求链接
@@ -37,5 +51,15 @@ namespace MaskCrawler.Models.Dto
         /// </summary>
         public string ResolvePattern { get; set; }
 
+        /// <summary>
+        /// 任务响应类型
+        /// </summary>
+        public string ResponseType { get; set; }
+
+        /// <summary>
+        /// 执行时间
+        /// </summary>
+        public DateTime? InvokeDate { get; set; }
     }
 }
+

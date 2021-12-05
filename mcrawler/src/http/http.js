@@ -25,6 +25,7 @@ const account = {
     },
 }
 
+// 任务模块
 const task = {
     query: (data) => {
         return axios({
@@ -58,6 +59,13 @@ const task = {
         return axios({
             url: "Main/Task/Start",
             method: "get",
+            data,
+        })
+    },
+    resolve : data => {
+        return axios({
+            url: "Main/Task/Resolve",
+            method: "post",
             data,
         })
     },

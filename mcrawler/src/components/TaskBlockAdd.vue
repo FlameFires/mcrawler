@@ -1,5 +1,5 @@
 <template>
-  <el-card shadow="always">+</el-card>
+  <el-card shadow="hover">+</el-card>
 </template>
 
 <script>
@@ -9,7 +9,7 @@
 .el-card {
   /* box-sizing: border-box; */
   display: flex;
-  height: 210px;
+  height: 187px;
   justify-content: center;
   align-items: center;
   font-size: 4rem;

@@ -1,14 +1,26 @@
 import { reactive, ref, toRefs, computed } from 'vue'
 import { account, task } from '../http/http.js'
-import { ElLoading, ElMessage } from 'element-plus'
+import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
 
 const data = reactive({
-    taskDialogRef: null,
     config: {
         showMenu: false,
     },
+    // 是否登录
+    isLogin: false,
+    loginDrawer: false,
+    loginRef: null,
+    loginInfo: {
+        account: '',
+        pwd: '',
+    },
+    // 任务详情框引用
+    taskDialogRef: null,
+    // 任务列表
     taskInfoList: [],
+    // 选中的任务
     selectedTaskInfo: {},
+    // 搜索文本
     searchText: '',
     page: 0,
     fullscreenLoading: false,
@@ -74,6 +86,7 @@ const search = () => {
  */
 function load(p) {
     data.page += p !== undefined ? 0 : 1;
+    console.trace({ page, p }, 'scroll')
 }
 /**
  * @description: 转换图片路径
@@ -100,12 +113,85 @@ const onUpdateFunc = index => {
     data.dialogType = "update"
     data.selectedTaskInfo = data.taskInfoList[index];
     data.taskDialogRef.open()
+    console.trace()
+}
+
+const onDeleteFunc = function (index) {
+    ElMessageBox.confirm(
+        '你确定删除吗?',
+        '警告',
+        {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    ).then(() => {
+        let taskInfo = data.taskInfoList[index];
+        if (data.isLogin) {
+            task.delete({ id: taskInfo.taskId })
+                .then(function (res) {
+                    if (res.ok) {
+                        data.taskInfoList.del(index)
+                        ElMessage.success("删除成功！")
+                    } else {
+                        ElMessage.error(res.msg)
+                    }
+                })
+        } else {
+            data.taskInfoList.del(index)
+        }
+    })
 }
 
 const onSuccessedFunc = res => {
     if (res.ok) {
         search()
     }
+}
+
+/**
+ * @description: 关闭登录窗口
+ * @param {*}
+ * @return {*}
+ */
+const closeLogin = () => {
+    data.loginDrawer = false
+    data.loginInfo.account = ''
+    data.loginInfo.pwd = ''
+}
+
+
+
+/**
+ * @description: 登录提交
+ * @param {*} formName
+ * @return {*}
+ */
+const submitLogin = function (formName) {
+    data.loginRef.validate((valid) => {
+        if (valid) {
+            // account.login({ name: "15180582975", pwd: "123456" })
+            account.login({
+                name: data.loginInfo.account,
+                pwd: data.loginInfo.pwd
+            })
+                .then(res => {
+                    if (res.ok) {
+                        // ElMessage.success(JSON.stringify(res));
+                        ElMessage.success("登录成功");
+                        data.isLogin = true;
+                        setTimeout(() => {
+                            data.loginDrawer = false
+                        }, 1000);
+                    } else {
+                        ElMessage.error(res.msg);
+                    }
+                });
+        } else {
+            console.log('error submit!!')
+            return false
+        }
+    })
 }
 
 //#endregion
@@ -122,6 +208,9 @@ export default {
         imgpath,
         onClickFunc,
         onUpdateFunc,
-        onSuccessedFunc
+        onSuccessedFunc,
+        onDeleteFunc,
+        closeLogin,
+        submitLogin,
     },
 }

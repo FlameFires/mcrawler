@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 using Newtonsoft.Json;
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace MaskCrawler.Models.Dto
 {
@@ -80,14 +83,34 @@ namespace MaskCrawler.Models.Dto
         }
         public static IActionResult Judge<TOutDto>(int num, string sucMsg = null, object data = null)
         {
-            TOutDto tempData = default;
+            TOutDto outObj = default;
             ResultCode tempCode = ResultCode.NoProbelm;
             string tempMsg = sucMsg;
             if (num.GetBool())
             {
-                // TODO 转换对应的TOutDto
-                // ....
-                // tempData = ?;
+                Type outType = typeof(TOutDto);
+                var outPros = outType.GetProperties();
+                outObj = (TOutDto)Activator.CreateInstance(outType);
+
+                foreach (PropertyInfo propertyInfo in data.GetType().GetProperties())
+                {
+                    var name = propertyInfo.Name;
+                    PropertyInfo p = outPros.Where(t => t.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                    object val = propertyInfo.GetValue(data);
+                    p.SetValue(outObj,val);
+
+                    // TODO 无法转换对应类型
+                    //if (p.GetValue(outObj) is ValueType)
+                    //{
+                        
+                    //    ValueType valueType = (ValueType)val;
+                    //    p.SetValue(outObj, valueType);
+                    //}
+                    //else if (p.GetType() == typeof(String))
+                    //{
+                    //    p.SetValue(outObj, val.ToString());
+                    //}
+                }
 
                 tempMsg = string.Empty;
             }
@@ -97,7 +120,7 @@ namespace MaskCrawler.Models.Dto
                 tempMsg = SqlMsgCons.RESULT_VALUE_INVALID;
             }
 
-            return GetJsonResult(tempMsg, true, tempCode, tempData);
+            return GetJsonResult(tempMsg, true, tempCode, outObj);
         }
 
         public static IActionResult GetJsonResult(string msg, bool ok, ResultCode code, object data = null)

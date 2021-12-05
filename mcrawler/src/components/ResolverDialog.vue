@@ -32,10 +32,29 @@
 
             <el-tabs type="border-card">
                 <el-tab-pane label="返回内容">
-                    <el-input type="textarea" :rows="15" :readonly="true" v-model="resContent"></el-input>
+                    <el-input
+                        type="textarea"
+                        :rows="15"
+                        :readonly="true"
+                        v-model="responseContent"
+                    ></el-input>
                 </el-tab-pane>
                 <el-tab-pane label="预览内容">
-                    <!-- <div v-html="resContent"></div> -->
+                    <iframe
+                        id="previewHtml"
+                        ref="previewHtml"
+                        type="textarea"
+                        frameborder="0"
+                        :rows="15"
+                        style="
+    width: 100%;
+    min-height: 350px;
+    word-wrap: break-word;
+    overflow-y: auto; 
+"
+                        scrolling="yes"
+                        :srcdoc="responseContent"
+                    ></iframe>
                 </el-tab-pane>
                 <el-tab-pane label="解析内容">
                     <el-input type="textarea" :rows="15" :readonly="true" v-model="resolveContent"></el-input>
@@ -50,14 +69,18 @@
 
                 <!-- 关闭 -->
                 <el-button @click="close">关闭</el-button>
+
+                <!-- 下载 -->
+                <el-button type="primary" v-if="cfg.showDownloadBtn" @click="download">下载</el-button>
             </span>
         </template>
     </el-dialog>
 </template>
 
-<script>
+<script lang="ts">
 import { ElMessage } from 'element-plus'
-import { ref, toRefs, defineComponent, reactive, toRef, toRaw } from 'vue'
+import { task } from '../http/http'
+import { ref, toRefs, defineComponent, reactive, toRef, toRaw, watchEffect } from 'vue'
 
 export default defineComponent({
     props: {
@@ -71,8 +94,9 @@ export default defineComponent({
             formRef: null,
             visible: false,
             cfg: {
-
+                showDownloadBtn: false
             },
+            responseContent: '',
             resolveContent: '',
             selectItems: {
                 rType: [
@@ -83,22 +107,30 @@ export default defineComponent({
                         label: 'XPath',
                         value: 'XPath'
                     }, {
-                        label: 'JQuery',
-                        value: 'JQuery'
+                        label: 'Css',
+                        value: 'CssLoad'
                     }, {
-                        label: 'Match',
+                        label: '通用匹配式',
                         value: 'Match'
-                    },
+                    }
                 ]
             },
             rules: {
+                
+            }
+        })
 
+        watchEffect(() => {
+            if (data.resolveContent)
+                data.cfg.showDownloadBtn = data.resolveContent.trim() != '' ? true : false
+            if (props.resContent && props.resContent.trim() != '') {
+                data.responseContent = props.resContent
             }
         })
 
         const resolve = () => {
-            data.formRef.validate((valid) => {
-                if (valid) {
+            data.formRef.validate((valid: Boolean) => {
+                if (valid && data.responseContent && data.responseContent != 'null') {
                     const info = toRaw(data.formRef.model)
                     switch (info.resolveType) {
                         case 'Regex':
@@ -107,7 +139,7 @@ export default defineComponent({
                         case 'XPath':
                             xpathResolve(info.resolvePattern)
                             break;
-                        case 'JQuery':
+                        case 'CssLoad':
                             jqueryResolve(info.resolvePattern)
                             break;
                         case 'Match':
@@ -119,6 +151,7 @@ export default defineComponent({
 
                 } else {
                     console.log('error submit!!')
+                    ElMessage.info('内容为空')
                     return false
                 }
             })
@@ -126,40 +159,94 @@ export default defineComponent({
 
         //#region resolve methos
 
-        const regexResolve = pattern => {
-            const backData = backResolveContent(props.resContent.match(new RegExp(pattern, "ig")))
-            data.resolveContent = backData
+        // 下载
+        const download: Function = () => {
+            let content = data.resolveContent
+            if (!content || content.trim() === '') {
+                return;
+            }
+
+            let url = window.URL.createObjectURL(new Blob([content]));
+            let link = document.createElement("a");
+            link.style.display = "none";
+            link.href = url;
+            link.setAttribute("download", "resolver_file.txt"); //指定下载后的文件名，防跳转
+            document.body.appendChild(link);
+            link.click();
+
         }
 
-        const xpathResolve = pattern => {
-            let arr = []
-            console.log('xpath resolve');
-
-            //#region 这里有问题,用不了,还是通过后台来处理
-            let objE = document.createElement("div");
-            objE.innerHTML = props.resContent;
-            const result = document.evaluate(pattern, objE.childNodes, null, XPathResult.ANY_TYPE, null)
-            let node = result.iterateNext()
-            while (node) {
-                arr.push(node)
-                node = result.iterateNext()
+        // 正则解析
+        const regexResolve: Function = (pattern: string) => {
+            if (!props.resContent || props.resContent.trim() == '') {
+                // 启动任务
+                task.start({ id: props.taskInfo.taskId })
+                    .then(res => {
+                        if (res.ok) {
+                            // ElMessage.success("启动成功")
+                            data.responseContent = res.data
+                            const backData = backResolveContent(res.data.match(new RegExp(pattern, "ig")))
+                            data.resolveContent = backData
+                        } else {
+                            ElMessage.error(res.msg)
+                        }
+                    }).catch((e) => {
+                        console.error(e);
+                    })
+            } else {
+                const backData = backResolveContent(props.resContent.match(new RegExp(pattern, "ig")))
+                data.resolveContent = backData
             }
+        }
+
+        // xpath解析
+        const xpathResolve: Function = (pattern: String) => {
+
+            //#region   启动任务
+            // task.resolve({ id: props.taskInfo.taskId })
+            task.resolve(props.taskInfo)
+                .then(res => {
+                    if (res.ok) {
+                        console.log("xpath");
+
+                        data.responseContent = res.data.html
+                        data.resolveContent = backResolveContent(res.data.result)
+                    } else {
+                        ElMessage.error(res.msg)
+                    }
+                }).catch((e: any) => {
+                    console.error(e);
+                })
+
             //#endregion
 
-            const backData = backResolveContent(arr)
-            data.resolveContent = backData
+            //#region 这里有问题,用不了,还是通过后台来处理
+            // console.log('xpath resolve');
+            // let arr = []
+            // let objE = document.createElement("div");
+            // objE.innerHTML = props.resContent;
+            // const result = document.evaluate(pattern, objE.childNodes, null, XPathResult.ANY_TYPE, null)
+            // let node = result.iterateNext()
+            // while (node) {
+            //     arr.push(node)
+            //     node = result.iterateNext()
+            // }
+            // const backData = backResolveContent(arr)
+            // data.resolveContent = backData
+            //#endregion
         }
 
-        const jqueryResolve = pattern => {
-            ElMessage.info("未实现此功能")
+        const jqueryResolve: Function = (pattern: String) => {
+            ElMessage.error("未实现此功能")
         }
 
-        const matchResolve = pattern => {
-            ElMessage.info("未实现此功能")
+        const matchResolve: Function = (pattern: String) => {
+            ElMessage.error("未实现此功能")
         }
 
-        const backResolveContent = resolvedData => {
-            let backData = ''
+        // 解析内容规范化
+        const backResolveContent: Function = resolvedData => {
+            let backData: String = ''
             if (resolvedData instanceof Array) {
                 resolvedData.forEach(item => backData += item + "\n")
             }
@@ -177,16 +264,25 @@ export default defineComponent({
         //#endregion
 
 
-
+        /**
+         * 窗口打开事件
+         */
         const open = e => {
             data.visible = true
         }
 
-        const close = e => data.visible = false
+        /**
+         * 窗口关闭事件
+         */
+        const close = e => {
+            data.visible = false
+            data.resolveContent = ''
+            data.responseContent = ''
+        }
 
         return {
             ...toRefs(data),
-            open, close, resolve
+            open, close, resolve, download
         }
     }
 })

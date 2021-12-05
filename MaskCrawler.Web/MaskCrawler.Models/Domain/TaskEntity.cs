@@ -9,6 +9,7 @@ namespace MaskCrawler.Models.Domain
     {
         public TaskEntity()
         {
+            CreateDate = DateTime.Now;
         }
 
         public TaskEntity Init()
@@ -88,6 +89,11 @@ namespace MaskCrawler.Models.Domain
         /// 创建时间
         /// </summary>
         public DateTime? CreateDate { get; set; }
+
+        /// <summary>
+        /// 执行时间
+        /// </summary>
+        public DateTime? InvokeDate { get; set; }
     }
 
 

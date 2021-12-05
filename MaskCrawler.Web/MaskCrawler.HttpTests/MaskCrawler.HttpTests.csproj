@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MaskCrawler.Http\MaskCrawler.Http.csproj" />
+    <ProjectReference Include="..\MaskCrawler.Models\MaskCrawler.Models.csproj" />
   </ItemGroup>
 
 </Project>

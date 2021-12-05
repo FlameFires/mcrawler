@@ -88,7 +88,9 @@
           :type="cfg.checkBtnType"
           @click="start"
         >{{ cfg.checkBtnText }}</el-button>
-        <el-button v-show="cfg.deleteBtnEnable" type="danger" @click="dele">删除</el-button>
+
+        <!-- 删除任务 -->
+        <!-- <el-button v-show="cfg.deleteBtnEnable" type="danger" @click="dele">删除</el-button> -->
 
         <!-- 解析 -->
         <el-button type="success" v-show="cfg.resolverBtnEnalbe" @click="resolveOpen">解析</el-button>
@@ -144,7 +146,10 @@ export default defineComponent({
         data.cfg.updateEnable = false
         data.cfg.resolverBtnEnalbe = false
       }
-      if (data.formRef) data.formRef.clearValidate()
+      // 清楚之前的信息
+      if (data.formRef) {
+        data.formRef.clearValidate()
+      }
       const formType = toRaw(props.formType)
       if (formType === 'create') {
         data.title = '添加任务'
@@ -170,6 +175,18 @@ export default defineComponent({
     //#region Emit Func
     const onClose = e => data.visible = false
 
+
+    /**
+     * @description: 
+     * @param {*} a
+     * @param {*} b
+     * @return {*}
+     */
+    const test = function (a, b) {
+
+    }
+
+
     const createHandle = postData =>
       ElMessageBox.confirm(
         '确定新增?',
@@ -193,10 +210,16 @@ export default defineComponent({
             ElMessage.error(res.message)
         })
       }).catch((action) => {
-        console.log(updateHandle, action);
+        console.trace({ postData, action });
       })
 
-    const updateHandle = postData =>
+
+    /**
+     * @description: 修改保存
+     * @param {*} postData
+     * @return {*}
+     */
+    const updateHandle = function (postData) {
       ElMessageBox.confirm(
         '确定修改?',
         '提示',
@@ -220,8 +243,9 @@ export default defineComponent({
               ElMessage.error(res.message)
           })
       }).catch((action) => {
-        console.log(updateHandle, action);
+        console.trace(postData, action);
       })
+    }
 
     const onSubmit = e => {
       const formType = toRaw(props.formType)
@@ -244,11 +268,17 @@ export default defineComponent({
 
     //#region  methods
 
+    /**
+     * @description: 启动任务
+     * @param {*}
+     * @return {*}
+     */
     const start = e => {
       data.cfg.checkBtnText = "暂停"
       data.cfg.checkBtnType = "warning"
 
       const info = toRaw(props.taskInfo)
+      // 启动任务
       task.start({ id: info.taskId }).then(res => {
         data.cfg.checkBtnText = "启动"
         data.cfg.checkBtnType = "primary"
@@ -311,7 +341,14 @@ export default defineComponent({
       data.resolverDialogRef.open()
     }
 
-    const validateUrl = (rule, value, callback) => {
+    /**
+     * @description: 验证url链接
+     * @param {*} rule
+     * @param {*} value
+     * @param {*} callback
+     * @return {*}
+     */
+    const validateUrl = function (rule, value, callback) {
       const pattern = new RegExp("(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
       if (value === '') {
         callback(new Error('请求链接不能为空'))
@@ -330,6 +367,7 @@ export default defineComponent({
         trigger: 'blur',
       },
       url: {
+        required: true,
         validator: validateUrl,
         trigger: 'blur',
       },
@@ -338,11 +376,11 @@ export default defineComponent({
         message: '请求类型必须选择一个',
         trigger: 'change',
       },
-      resolveType: {
-        required: true,
-        message: '解析类型必须选择一个',
-        trigger: 'change',
-      },
+      // resolveType: {
+      //   required: true,
+      //   message: '解析类型必须选择一个',
+      //   trigger: 'change',
+      // },
     })
 
     //#endregion

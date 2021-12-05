@@ -60,6 +60,13 @@ namespace MaskCrawler.Persistent.Services
         Task<int> Insert(TEntity entity);
 
         /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        Task<TKey> Insert<TKey>(TEntity entity);
+
+        /// <summary>
         /// 更新实体
         /// </summary>
         /// <param name="entity"></param>
@@ -73,7 +80,13 @@ namespace MaskCrawler.Persistent.Services
         /// <returns></returns>
         Task<bool> Delete(TEntity entity);
 
-
+        /// <summary>
+        /// sql脚本执行
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
         Task<int> Execute(string sql, object param = null, CommandType? commandType = null);
     }
 }

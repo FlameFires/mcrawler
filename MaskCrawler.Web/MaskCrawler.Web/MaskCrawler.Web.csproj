@@ -5,14 +5,16 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DocumentationFile>C:\Users\FIRE\source\repos\MaskCrawler.Web\MaskCrawler\MaskCrawler.xml</DocumentationFile>
+		<DocumentationFile>E:\GitHub仓库\mcralwer\MaskCrawler.Web\MaskCrawler.Web\bin\Debug\netcoreapp3.1\MaskCrawler.xml</DocumentationFile>
 		<NoWarn>1701;1702;1591;</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AngleSharp" Version="0.16.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.19" />
 		<PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="3.1.13" />
-		    <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.0" />
+		<PackageReference Include="FluentValidation.AspNetCore" Version="9.5.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
 	</ItemGroup>
@@ -22,12 +24,6 @@
 		<ProjectReference Include="..\MaskCrawler.Models\MaskCrawler.Models.csproj" />
 		<ProjectReference Include="..\MaskCrawler.Persistent\MaskCrawler.Persistent.csproj" />
 		<ProjectReference Include="..\MaskCrawler.Utils\MaskCrawler.Utils.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Reference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson">
-			<HintPath>..\..\..\..\.nuget\packages\microsoft.aspnetcore.mvc.newtonsoftjson\3.1.13\lib\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll</HintPath>
-		</Reference>
 	</ItemGroup>
 
 </Project>
